@@ -36,10 +36,10 @@ func NewRangeWithBlockSize(iprange string, blockSize int) (*Range, error) {
     }
 
     return &Range{
-        IP: IP,
+        IP: ip,
         ipnet: ipnet,
         stepPrefix: "/" + strconv.Itoa(blockSize),
-        step: long2ip(1 << uint(32 - blockSize)),
+        step: Long2IP(1 << uint(32 - blockSize)),
     }, nil
 }
 

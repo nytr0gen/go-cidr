@@ -4,17 +4,11 @@ import (
     "net"
 )
 
-func init() {
-    var privateRanges [3]net.IPNet
-    _, privateRanges[0], err := net.ParseCIDR("10.0.0.0/8")
-    _, privateRanges[0], err := net.ParseCIDR("172.16.0.0/12")
-    _, privateRanges[0], err := net.ParseCIDR("192.168.0.0/16")
-    // "10.0.0.0/8"
-    // "172.16.0.0/12"
-    // "192.168.0.0/16"
+func IP2Long(ip net.IP) uint {
+    return (uint(ip[12]) << 24) + (uint(ip[13]) << 16) + (uint(ip[14]) << 8) + uint(ip[15])
 }
 
-func long2ip(long uint) net.IP {
+func Long2IP(long uint) net.IP {
     return net.IPv4(byte(long >> 24), byte(long >> 16), byte(long >> 8), byte(long))
 }
 

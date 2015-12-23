@@ -2,6 +2,8 @@ package cidr
 
 import (
     "testing"
+    "math/rand"
+    "net"
 )
 
 func TestRange(t *testing.T) {
@@ -166,5 +168,36 @@ func TestShouldFailOnBadBlockStep(t *testing.T) {
         } else {
             t.Fatalf("didn't fail on %s", iprange)
         }
+    }
+}
+
+func TestIP2Long(t *testing.T) {
+    testsNum := 32
+    for testsNum > 0 {
+        ip := net.IPv4(byte(rand.Intn(256)),
+            byte(rand.Intn(256)),
+            byte(rand.Intn(256)),
+            byte(rand.Intn(256)))
+        assertIP := Long2IP(IP2Long(ip))
+        if !ip.Equal(assertIP) {
+            t.Fatalf("didn't work %s != %s", ip.String(), assertIP.String())
+            return
+        }
+
+        testsNum--
+    }
+}
+
+func TestLong2IP(t *testing.T) {
+    testsNum := 32
+    for testsNum > 0 {
+        long := uint(rand.Uint32())
+        assertLong := IP2Long(Long2IP(long))
+        if long != assertLong {
+            t.Fatalf("didn't work %u != %u", long, assertLong)
+            return
+        }
+
+        testsNum--
     }
 }
