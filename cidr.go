@@ -51,9 +51,9 @@ type Range struct {
 }
 
 func (r *Range) Next() bool {
-    for j := len(r.IP) - 1; j >= 0; j-- {
+    for j, lim := len(r.IP) - 1, len(r.IP) - 5; j > lim; j-- {
         t := r.IP[j] + r.step[j]
-        if r.IP[j] > t && j > 0 {
+        if r.IP[j] > 255 - r.step[j] && j > 0 {
             r.IP[j - 1]++
         }
         r.IP[j] = t

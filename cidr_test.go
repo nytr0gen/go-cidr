@@ -42,13 +42,13 @@ func TestRangeWith31Prefix(t *testing.T) {
     }
 
     i := 0
-    for {
+    for i < len(ips)  {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
 
         i++
-        if !r.Next() { break; }
+        r.Next()
     }
 }
 
@@ -66,13 +66,13 @@ func TestRangeWith25Prefix(t *testing.T) {
     }
 
     i := 0
-    for {
+    for i < len(ips) {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
 
         i++
-        if !r.Next() { break; }
+        r.Next()
     }
 }
 
@@ -91,13 +91,13 @@ func TestRangeWith24Prefix(t *testing.T) {
     }
 
     i := 0
-    for {
+    for i < len(ips) {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
 
         i++
-        if !r.Next() { break; }
+        r.Next()
     }
 }
 
@@ -121,7 +121,7 @@ func TestRangeWith24PrefixShowingPrefix(t *testing.T) {
         }
 
         i++
-        if !r.Next() { break; }
+        r.Next()
     }
 }
 
