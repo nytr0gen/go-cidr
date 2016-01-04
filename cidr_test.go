@@ -20,15 +20,13 @@ func TestRange(t *testing.T) {
     }
 
     i := 0
-    if r.String() != ips[i] {
-        t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
-    }
-
-    for r.Next() {
-        i++
+    for {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
+
+        i++
+        if !r.Next() { break; }
     }
 }
 
@@ -44,15 +42,13 @@ func TestRangeWith31Prefix(t *testing.T) {
     }
 
     i := 0
-    if r.String() != ips[i] {
-        t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
-    }
-
-    for r.Next() {
-        i++
+    for {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
+
+        i++
+        if !r.Next() { break; }
     }
 }
 
@@ -70,15 +66,13 @@ func TestRangeWith25Prefix(t *testing.T) {
     }
 
     i := 0
-    if r.String() != ips[i] {
-        t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
-    }
-
-    for r.Next() {
-        i++
+    for {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
+
+        i++
+        if !r.Next() { break; }
     }
 }
 
@@ -97,41 +91,37 @@ func TestRangeWith24Prefix(t *testing.T) {
     }
 
     i := 0
-    if r.String() != ips[i] {
-        t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
-    }
-
-    for r.Next() {
-        i++
+    for {
         if r.String() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.String(), ips[i])
         }
+
+        i++
+        if !r.Next() { break; }
     }
 }
 
 func TestRangeWith24PrefixShowingPrefix(t *testing.T) {
-    r, err := NewRangeWithBlockSize("127.0.0.0/22", 24)
+    r, err := NewRangeWithBlockSize("44.44.0.0/16", 24)
     if err != nil {
         t.Fatal(err)
     }
 
     ips := []string{
-        "127.0.0.0/24",
-        "127.0.1.0/24",
-        "127.0.2.0/24",
-        "127.0.3.0/24",
+        "44.44.0.0/24",
+        "44.44.1.0/24",
+        "44.44.2.0/24",
+        "44.44.3.0/24",
     }
 
     i := 0
-    if r.StringPrefix() != ips[i] {
-        t.Fatalf("Failed at '%s' != '%s'\n", r.StringPrefix(), ips[i])
-    }
-
-    for r.Next() {
-        i++
+    for i < len(ips) {
         if r.StringPrefix() != ips[i] {
             t.Fatalf("Failed at %s != %s\n", r.StringPrefix(), ips[i])
         }
+
+        i++
+        if !r.Next() { break; }
     }
 }
 
