@@ -36,36 +36,35 @@ func NewRangeWithBlockSize(iprange string, blockSize int) (*Range, error) {
     }
 
     return &Range{
-        IP: ip,
+        ip: ip,
+        iplong: IP2Long(ip),
         ipnet: ipnet,
-        stepPrefix: "/" + strconv.Itoa(blockSize),
-        step: Long2IP(1 << uint(32 - blockSize)),
+        stepprefix: "/" + strconv.Itoa(blockSize),
+        lastiplong: IP2Long(ip) + (1 << uint(32 - iprangeMask)) - 1,
+        step: 1 << uint(32 - blockSize),
     }, nil
 }
 
 type Range struct {
-    IP net.IP
     ipnet *net.IPNet
-    stepPrefix string
-    step net.IP
+    ip net.IP
+    iplong uint
+    lastiplong uint
+    stepprefix string
+    step uint
 }
 
 func (r *Range) Next() bool {
-    for j, lim := len(r.IP) - 1, len(r.IP) - 5; j > lim; j-- {
-        t := r.IP[j] + r.step[j]
-        if r.IP[j] > 255 - r.step[j] && j > lim {
-            r.IP[j - 1]++
-        }
-        r.IP[j] = t
-    }
+    r.iplong += r.step
+    r.ip = Long2IP(r.iplong)
 
-    return r.ipnet.Contains(r.IP)
+    return r.iplong <= r.lastiplong
 }
 
 func (r *Range) String() string {
-    return r.IP.String()
+    return r.ip.String()
 }
 
 func (r *Range) StringPrefix() string {
-    return r.IP.String() + r.stepPrefix
+    return r.ip.String() + r.stepprefix
 }
