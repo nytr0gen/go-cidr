@@ -7,6 +7,22 @@ import (
     "errors"
 )
 
+func List(iprange string) (ips []*string, err error) {
+    r, err := NewRange(iprange)
+    if err != nil {
+        return
+    }
+
+    for {
+        ip := r.String()
+        ips = append(ips, &ip)
+
+        if !r.Next() { break }
+    }
+
+    return
+}
+
 func NewRange(iprange string) (*Range, error) {
     return NewRangeWithBlockSize(iprange, 32)
 }

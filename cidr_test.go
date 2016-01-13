@@ -6,6 +6,33 @@ import (
     "net"
 )
 
+func TestList(t *testing.T) {
+    ipsList, err := List("127.0.0.0/30")
+    if err != nil {
+        t.Fatal(err)
+    }
+
+    ipsTest := []string{
+        "127.0.0.0",
+        "127.0.0.1",
+        "127.0.0.2",
+        "127.0.0.3",
+    }
+
+    if len(ipsTest) != len(ipsList) {
+        t.Fatalf("different lengths for test list and ips list %d != %d",
+            len(ipsTest), len(ipsList))
+        return
+    }
+
+    for i := range ipsTest {
+        if ipsTest[i] != *ipsList[i] {
+            t.Fatalf("got different ip %s != %s",
+                ipsTest[i], *ipsList[i])
+        }
+    }
+}
+
 func TestRange(t *testing.T) {
     r, err := NewRange("127.0.0.0/30")
     if err != nil {

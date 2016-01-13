@@ -23,12 +23,26 @@ if err != nil {
     panic(err)
 }
 
-println(r.String()) // 127.0.0.0
-println(r.StringPrefix()) // 127.0.0.0/31
-r.Next() // true
+for {
+    println(r.String()) // 127.0.0.0
+    println(r.StringPrefix()) // 127.0.0.0/31
 
-println(r.String()) // 127.0.0.2
-println(r.StringPrefix()) // 127.0.0.2/31
-r.Next() // false
+    if !r.Next() {
+        break
+    }
+}
+```
+
+```go
+import "github.com/nytr0gen/go-cidr"
+
+ips, err := cidr.List("127.0.0.0/30")
+if err != nil {
+    panic(err)
+}
+
+for _, ip := ips {
+    println(ip) // 127.0.0.0
+}
 ```
 # go-cidr
