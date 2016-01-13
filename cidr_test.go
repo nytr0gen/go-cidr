@@ -26,9 +26,9 @@ func TestList(t *testing.T) {
     }
 
     for i := range ipsTest {
-        if ipsTest[i] != *ipsList[i] {
+        if ipsTest[i] != ipsList[i] {
             t.Fatalf("got different ip %s != %s",
-                ipsTest[i], *ipsList[i])
+                ipsTest[i], ipsList[i])
         }
     }
 }
