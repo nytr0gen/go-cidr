@@ -45,4 +45,3 @@ for _, ip := ips {
     println(ip) // 127.0.0.0
 }
 ```
-# go-cidr
